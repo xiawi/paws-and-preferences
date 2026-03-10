@@ -8,38 +8,68 @@ import { CONFIG } from './config.js';
 import { liked, disliked } from './cats.js';
 import { catContainer } from './dom.js';
 
-const topCard = catContainer.lastElementChild;
+attachDragListeners(catContainer.lastElementChild);
 let isDragging = false;
 let startX = 0;
 let deltaX = 0;
 
-topCard.addEventListener('pointerdown', (e) => {
-	isDragging = true;
-	startX = e.clientX;
-	topCard.style.transition = 'none';
-});
+function attachDragListeners(card) {
+	card.addEventListener('pointerdown', (e) => {
+		isDragging = true;
+		startX = e.clientX;
+		card.style.transition = 'none';
+		card.setPointerCapture(e.pointerId);
+	});
 
-topCard.addEventListener('pointermove', (e) => {
-	if (!isDragging) return;
-	deltaX = e.clientX - startX;
-	const rotation = deltaX * CONFIG.rotationMultiplier;
-	topCard.style.transform = `translateX(${deltaX}px) rotate(${rotation}deg)`;
-});
+	card.addEventListener('pointercancel', () => {
+		isDragging = false;
+		card.style.transition = '';
+		card.style.transform = '';
+		deltaX = 0;
+	});
 
-topCard.addEventListener('pointerup', () => {
-	isDragging = false;
-	if (deltaX > CONFIG.deltaThreshold) {
-		// If dragged past threshold towards the right, throw off-screen towards the right
-		topCard.style.transition = 'transform 0.5s ease';
-		topCard.style.transform = 'translateX(1000px) rotate(30deg)';
-	} else if (deltaX < -CONFIG.deltaThreshold) {
-		// If dragged past threshold towards the left, throw off-screen towards the left
-		topCard.style.transition = 'transform 0.5s ease';
-		topCard.style.transform = 'translateX(-1000px) rotate(-30deg)';
+	card.addEventListener('pointermove', (e) => {
+		if (!isDragging) return;
+		deltaX = e.clientX - startX;
+		const rotation = deltaX * CONFIG.rotationMultiplier;
+		card.style.transform = `translateX(${deltaX}px) rotate(${rotation}deg)`;
+	});
+
+	card.addEventListener('pointerup', () => {
+		isDragging = false;
+		if (deltaX > CONFIG.deltaThreshold) {
+			// If dragged past threshold towards the right, add to liked array, throw off-screen towards the right.
+			liked.push(card.querySelector('img').src);
+			card.style.transition = 'transform 0.5s ease';
+			card.style.transform = 'translateX(1000px) rotate(30deg)';
+			throwCard(card);
+		} else if (deltaX < -CONFIG.deltaThreshold) {
+			// If dragged past threshold towards the left, add to liked array, throw off-screen towards the left.
+			disliked.push(card.querySelector('img').src);
+			card.style.transition = 'transform 0.5s ease';
+			card.style.transform = 'translateX(-1000px) rotate(-30deg)';
+			throwCard(card);
+		} else {
+			// Snap back to original position
+			card.style.transition = '';
+			card.style.transform = '';
+		}
+		deltaX = 0;
+	});
+}
+
+function throwCard(card) {
+	let popped = false;
+	card.addEventListener('transitionend', () => {
+		if (!popped) { popped = true; popCard(card); }
+	}, { once: true });
+}
+
+function popCard(card) {
+	card.remove();
+	if (catContainer.lastElementChild) {
+		attachDragListeners(catContainer.lastElementChild);
 	} else {
-		// Snap back to original position
-		topCard.style.transition = '';
-		topCard.style.transform = '';
+		showSummary();
 	}
-	deltaX = 0;
-});
+}
