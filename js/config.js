@@ -7,7 +7,7 @@
 export const CONFIG = {
 	cardWidth: 400,
 	cardHeight: 600,
-	maxCats: 3,
+	maxCats: 20,
 	rotationMultiplier: 0.03,
 	deltaThreshold: 100,
 };
