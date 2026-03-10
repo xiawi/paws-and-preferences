@@ -1,4 +1,6 @@
 #cat-container {
+	display: flex;
+	justify-content: center;
 	position: relative;
 }
 
@@ -7,6 +9,7 @@
 	width: min(var(--card-width), 40vw);
 	height: min(var(--card-height), 60vw);
 	touch-action: none;
+	transition: transform 0.3s ease;
 }
 
 .card img{

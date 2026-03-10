@@ -9,6 +9,7 @@ export const CONFIG = {
 	cardHeight: 600,
 	maxCats: 3,
 	rotationMultiplier: 0.03,
+	deltaThreshold: 100,
 };
 
 document.documentElement.style.setProperty('--card-width', `${CONFIG.cardWidth}px`);
