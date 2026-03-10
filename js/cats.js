@@ -5,8 +5,8 @@
  */
 
 import { CONFIG } from './config.js'
+import { catContainer } from './dom.js'
 
-const container = document.getElementById('cat-container');
 const cats = [];
 const liked = [];
 const disliked = [];
@@ -21,7 +21,7 @@ cats.forEach(cat => {
 	const img = document.createElement('img');
 	img.src = cat;
 	card.appendChild(img);
-	container.appendChild(card);
+	catContainer.appendChild(card);
 });
 
 export { liked, disliked };
