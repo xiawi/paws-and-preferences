@@ -7,6 +7,7 @@
 import { CONFIG } from './config.js';
 import { liked, disliked } from './cats.js';
 import { catContainer } from './dom.js';
+import { showSummary } from './summary.js';
 
 attachDragListeners(catContainer.lastElementChild);
 let isDragging = false;
@@ -36,6 +37,7 @@ function attachDragListeners(card) {
 	});
 
 	card.addEventListener('pointerup', () => {
+		console.log(deltaX);
 		isDragging = false;
 		if (deltaX > CONFIG.deltaThreshold) {
 			// If dragged past threshold towards the right, add to liked array, throw off-screen towards the right.
@@ -53,12 +55,17 @@ function attachDragListeners(card) {
 			// Snap back to original position
 			card.style.transition = '';
 			card.style.transform = '';
+			deltaX = 0;
 		}
-		deltaX = 0;
 	});
 }
 
 function throwCard(card) {
+	const nextCard = card.previousElementSibling;
+	if (nextCard) {
+		attachDragListeners(nextCard);
+	}
+
 	let popped = false;
 	card.addEventListener('transitionend', () => {
 		if (!popped) { popped = true; popCard(card); }
@@ -67,9 +74,7 @@ function throwCard(card) {
 
 function popCard(card) {
 	card.remove();
-	if (catContainer.lastElementChild) {
-		attachDragListeners(catContainer.lastElementChild);
-	} else {
+	if (!catContainer.lastElementChild) {
 		showSummary();
 	}
 }

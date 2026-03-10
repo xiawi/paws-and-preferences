@@ -4,6 +4,12 @@
 	position: relative;
 }
 
+#summary {
+	display: flex;
+	justify-content: center;
+	position: relative;
+}
+
 .card {
 	position: absolute;
 	width: min(var(--card-width), 40vw);
