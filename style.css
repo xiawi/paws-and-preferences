@@ -1,0 +1,7 @@
+#cat-container {
+	position: relative;
+}
+
+.card {
+	position: absolute;
+}
