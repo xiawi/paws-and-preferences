@@ -37,7 +37,6 @@ function attachDragListeners(card) {
 	});
 
 	card.addEventListener('pointerup', () => {
-		console.log(deltaX);
 		isDragging = false;
 		if (deltaX > CONFIG.deltaThreshold) {
 			// If dragged past threshold towards the right, add to liked array, throw off-screen towards the right.
