@@ -12,6 +12,7 @@ function showSummary() {
 	catContainer.style.display = 'none';
 	counterDiv.style.display = 'none';
 	summaryDiv.style.display = 'flex';
+	document.body.style.overflowY = 'auto';
 
 	const heading = document.createElement('h1');
 	heading.textContent = 'Your Results';

@@ -10,6 +10,8 @@ import { catContainer } from './dom.js';
 import { showSummary } from './summary.js';
 import { updateCounter } from './counter.js';
 
+// Disable vertical scrolling
+document.body.style.overflowY = 'hidden';
 let currentCard = catContainer.lastElementChild;
 attachDragListeners(catContainer.lastElementChild);
 let isDragging = false;
