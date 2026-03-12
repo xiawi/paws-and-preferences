@@ -6,10 +6,11 @@
 
 import { CONFIG } from './config.js';
 import { liked, disliked } from './cats.js';
-import { catContainer, summaryDiv } from './dom.js';
+import { catContainer, counterDiv, summaryDiv } from './dom.js';
 
 function showSummary() {
 	catContainer.style.display = 'none';
+	counterDiv.style.display = 'none';
 	summaryDiv.style.display = 'flex';
 
 	const heading = document.createElement('h1');

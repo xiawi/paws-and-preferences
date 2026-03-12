@@ -1,6 +1,24 @@
+#app {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	min-height: 100dvh;
+}
+
 #cat-container {
 	display: flex;
 	justify-content: center;
+	position: relative;
+	width: min(var(--card-width), 53vw);
+	height: min(var(--card-height), 80vw);
+}
+
+#counter {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	position: relative;
 }
 
@@ -14,8 +32,8 @@
 
 .card {
 	position: absolute;
-	width: min(var(--card-width), 40vw);
-	height: min(var(--card-height), 60vw);
+	width: min(var(--card-width), 53vw);
+	height: min(var(--card-height), 80vw);
 	touch-action: none;
 	transition: transform 0.3s ease;
 }
@@ -23,6 +41,6 @@
 .card img{
 	pointer-events: none;
 	width: 100%;
-	height: 100%
+	height: 100%;
 	object-fit: cover;
 }

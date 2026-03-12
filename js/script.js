@@ -1,3 +1,5 @@
 import './cats.js';
 import './drag.js';
-import './summary.js';
+import { initCounter } from './counter.js';
+
+initCounter();
