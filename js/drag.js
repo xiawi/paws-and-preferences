@@ -17,8 +17,6 @@ attachDragListeners(catContainer.lastElementChild);
 let isDragging = false;
 let startX = 0;
 let deltaX = 0;
-let shrinkInterval = null;
-let shrinkTimeout = null;
 
 function attachDragListeners(card) {
 	currentCard = card;
@@ -58,15 +56,6 @@ function attachDragListeners(card) {
 		} else {
 			label.style.opacity = 0;
 		}
-
-		const size = Math.min(Math.abs(deltaX) / CONFIG.deltaThreshold, 1) * 100;
-		if (deltaX > 0) {
-			document.body.style.background = `linear-gradient(to left, rgba(100, 200, 100, 1) 0%, var(--bg) ${size}%)`;
-		} else if (deltaX < 0) {
-			document.body.style.background = `linear-gradient(to right, rgba(232, 112, 90, 1) 0%, var(--bg) ${size}%)`;
-		} else {
-			document.body.style.background = '';
-		}
 	});
 
 	card.addEventListener('pointerup', () => {
@@ -83,51 +72,9 @@ function attachDragListeners(card) {
 			card.style.transform = '';
 			const label = card.querySelector('.swipe-label');
 			label.style.opacity = 0;
-
-			const direction = deltaX > 0 ? 'right' : 'left';
-			let size = Math.min(Math.abs(deltaX) / CONFIG.deltaThreshold, 1) * 100;
 			deltaX = 0;
-
-			const shrink = setInterval(() => {
-			size -= 5;
-			if (size <= 0) {
-				document.body.style.background = '';
-				clearInterval(shrink);
-				return;
-			}
-			if (direction === 'right') {
-				document.body.style.background = `linear-gradient(to left, rgba(100, 200, 100, 1) 0%, var(--bg) ${size}%)`;
-			} else {
-				document.body.style.background = `linear-gradient(to right, rgba(232, 112, 90, 1) 0%, var(--bg) ${size}%)`;
-			}
-			}, 16);
 		}
 	});
-}
-
-function startShrink(direction) {
-	if (shrinkInterval) { clearInterval(shrinkInterval); shrinkInterval = null; }
-	if (shrinkTimeout) { clearTimeout(shrinkTimeout); shrinkTimeout = null; }
-
-	let size = 100;
-	document.body.style.background = direction === 'right'
-	? `linear-gradient(to left, rgba(100, 200, 100, 1) 0%, var(--bg) 100%)`
-	: `linear-gradient(to right, rgba(232, 112, 90, 1) 0%, var(--bg) 100%)`;
-
-	shrinkTimeout = setTimeout(() => {
-		shrinkInterval = setInterval(() => {
-			size -= 3;
-			if (size <= 0) {
-				document.body.style.background = '';
-				clearInterval(shrinkInterval);
-				shrinkInterval = null;
-				return;
-			}
-			document.body.style.background = direction === 'right'
-			? `linear-gradient(to left, rgba(100, 200, 100, 1) 0%, var(--bg) ${size}%)`
-			: `linear-gradient(to right, rgba(232, 112, 90, 1) 0%, var(--bg) ${size}%)`;
-		}, 4);
-	}, 300);	
 }
 
 function swipeRight(card) {
@@ -136,7 +83,6 @@ function swipeRight(card) {
 	liked.push(card.querySelector('img').src);
 	card.style.transition = 'transform 0.5s ease';
 	card.style.transform = 'translateX(1000px) rotate(30deg)';
-	startShrink('right');
 	throwCard(card);
 }
 
@@ -146,7 +92,6 @@ function swipeLeft(card) {
 	disliked.push(card.querySelector('img').src);
 	card.style.transition = 'transform 0.5s ease';
 	card.style.transform = 'translateX(-1000px) rotate(-30deg)';
-	startShrink('left');
 	throwCard(card);
 }
 
