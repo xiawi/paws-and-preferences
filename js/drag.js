@@ -46,6 +46,9 @@ function attachDragListeners(card) {
 			label.textContent = 'LIKE';
 			label.style.color = '#64c864';
 			label.style.opacity = opacity;
+			label.style.right = 'auto';
+			label.style.left = '20px';
+			label.style.transform = 'rotate(-15deg)';
 		} else if (deltaX < 0) {
 			label.textContent = 'NOPE';
 			label.style.color = '#e8705a';
