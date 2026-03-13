@@ -172,6 +172,21 @@ body.dark {
 	object-fit: cover;
 }
 
+.swipe-label {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	font-size: 2rem;
+	font-weight: 700;
+	opacity: 0;
+	transition: opacity 0.1s ease;
+	pointer-events: none;
+	border: 4px solid currentColor;
+	border-radius: 8px;
+	padding: 4px 12px;
+	transform: rotate(-15deg);
+}
+
 .gallery-section {
 	width: 90%;
 	display: flex;

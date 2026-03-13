@@ -25,7 +25,10 @@ function loadCats() {
 			img.onload = () => resolve();
 			img.onerror = () => resolve();
 			img.src = src;
+			const label = document.createElement('div');
+			label.classList.add('swipe-label');
 			card.appendChild(img);
+			card.appendChild(label);
 			catContainer.appendChild(card);
 		});
 	});
