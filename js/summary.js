@@ -25,8 +25,37 @@ function showSummary() {
 	} 
 	stats.textContent += `You liked ${liked.length} out of ${CONFIG.maxCats} cats.`
 
+	const likedGallery = createGallery(liked, '❤️ Liked');
+	const dislikedGallery = createGallery(disliked, '👎 Passed');
+
 	summaryDiv.appendChild(heading);
 	summaryDiv.appendChild(stats);
+	if (likedGallery) summaryDiv.appendChild(likedGallery);
+	if (dislikedGallery) summaryDiv.appendChild(dislikedGallery);
+}
+
+function createGallery(cats, label) {
+	if (cats.length === 0) return null;
+
+	const section = document.createElement('div');
+	section.classList.add('gallery-section');
+
+	const title = document.createElement('p');
+	title.textContent = label;
+	title.classList.add('gallery-label');
+
+	const grid = document.createElement('div');
+	grid.classList.add('gallery-grid');
+
+	cats.forEach(src => {
+	const img = document.createElement('img');
+	img.src = src;
+	grid.appendChild(img);
+	});
+
+	section.appendChild(title);
+	section.appendChild(grid);
+	return section;
 }
 
 export { showSummary };
