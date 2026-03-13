@@ -2,6 +2,10 @@
 Assessment Project for Netizen Experience, built with vanilla HTML, CSS, and JavaScript.
 
 # Contents
+- [The Project](#the-project)
+- [Technical Decisions](#technical-decisions)
+- [Design Choices](#design-choices)
+- [How to Run](#how-to-run)
 
 # The Project
 Paws and Preferences is a web application that helps discover what kinds of cats or kittens a user prefers. It is a single-page web application where users go through a set of cat images, and uses swipes to indicate preference for a particular image. Once the entire stack of cats have been gone through, a summary is shown for the user's session.
@@ -18,6 +22,14 @@ Direct DOM manipulation also gives precise control over swipe animations, avoidi
 
 **Swipe Feedback** — As the user drags a card, a LIKE or NOPE label fades in proportionally to how far they've dragged. This gives the user confidence that their gesture is being registered before they commit to it.
 
-**Modular Architecture** — The codebase is split into focused modules: config.js, dom.js, cats.js, drag.js, counter.js, summary.js, theme.js, and tooltip.js. Each file has a single responsibility, making the code easy to navigate and reason about.
+**Modular Architecture** — The codebase is split into focused modules: `config.js`, `dom.js`, `cats.js`, `drag.js`, `counter.js`, `summary.js`, `theme.js`, and `tooltip.js`. Each file has a single responsibility, making the code easy to navigate and reason about.
 
 **ES Modules** — Native ES modules were used instead of bundling, keeping the project dependency-free while still maintaining clean separation of concerns.
+
+# How to Run
+**Live:** [GitHub Pages](https://xiawi.github.io/paws-and-preferences/)
+
+**Local:**
+```bash
+npx serve .
+```
