@@ -72,6 +72,29 @@ body.dark {
 	background: rgba(26, 22, 18, 0.08);
 }
 
+#tooltip-container {
+	position: relative;
+}
+
+#tooltip {
+	display: none;
+	position: absolute;
+	right: 0;
+	top: 110%;
+	background: var(--card-bg);
+	color: var(--text);
+	padding: 12px 16px;
+	border-radius: 12px;
+	width: 220px;
+	font-size: 0.85rem;
+	box-shadow: 0 4px 16px rgba(26, 22, 18, 0.12);
+	z-index: 200;
+}
+
+#tooltip.visible {
+	display: block;
+}
+
 #loading {
 	position: fixed;
 	inset: 0;
