@@ -1,6 +1,8 @@
 import './theme.js';
-import './cats.js';
-import './drag.js';
+import { loadCats } from './cats.js';
 import { initCounter } from './counter.js';
 
-initCounter();
+loadCats().then(() => {
+	import('./drag.js');
+	initCounter();
+});

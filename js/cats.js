@@ -15,13 +15,25 @@ for (let i = 0; i < CONFIG.maxCats; i++) {
 	cats.push(`https://cataas.com/cat?position=center&width=${CONFIG.cardWidth}&height=${CONFIG.cardHeight}&unique=${i}`);
 }
 
-cats.forEach(cat => {
-	const card = document.createElement('div');
-	card.classList.add('card');
-	const img = document.createElement('img');
-	img.src = cat;
-	card.appendChild(img);
-	catContainer.appendChild(card);
-});
+function loadCats() {
+	const loading = document.getElementById('loading');
+	const promises = cats.map(src => {
+		return new Promise((resolve) => {
+			const card = document.createElement('div');
+			card.classList.add('card');
+			const img = document.createElement('img');
+			img.onload = () => resolve();
+			img.onerror = () => resolve();
+			img.src = src;
+			card.appendChild(img);
+			catContainer.appendChild(card);
+		});
+	});
 
-export { liked, disliked };
+	return Promise.all(promises).then(() => {
+		loading.style.display = 'none';
+		loading.addEventListener('transitionend', () => loading.remove(), { once: true });
+	});
+}
+
+export { liked, disliked, loadCats };
